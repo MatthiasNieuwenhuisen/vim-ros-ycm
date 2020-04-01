@@ -6,6 +6,8 @@ import subprocess
 import rospkg
 import ycm_core
 
+import sys
+
 LOGGER = logging.getLogger('vim-ros-ycm')
 SOURCE_EXTENSIONS = ['.cpp', '.cxx', '.cc', '.c', '.m', '.mm']
 LAST_CWD = None
@@ -96,7 +98,7 @@ def UpdateRosWorkspace():
         ROS_WORKSPACE_FLAGS = None
         try:
             ROS_WORKSPACE = subprocess.check_output(['catkin', 'locate'],
-                                                    stderr=subprocess.STDOUT).strip()
+                                                    stderr=subprocess.STDOUT).strip().decode(sys.stdout.encoding)
         except subprocess.CalledProcessError as e:
             if e.returncode == 1:
                 LOGGER.info('catkin locate error: %s', result.output)
